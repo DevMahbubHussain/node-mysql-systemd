@@ -1,37 +1,35 @@
-## Deploying a Node.js Application with MySQL using systemd
+# Deploying a Node.js Application with MySQL using systemd
 
-# first created a Nodejs App name node-app
-
-# Install Node.js and npm
+### Install Node.js and npm
 
 `sudo apt install -y nodejs`
 
-# Created the project directory:
+### Created the project directory:
 
 `mkdir -p ~/node-app`
 `cd ~/node-app`
 
-# Initialized the Node.js project:
+### Initialized the Node.js project:
 
 `npm init -y`
 
-# Installed dependencies:
+### Installed dependencies:
 
 `npm install express mysql2 dotenv`
 
-# Created a .env file:
+### Created a .env file:
 
 `DB_HOST=localhost
 DB_USER=appuser
 DB_PASSWORD=password
 DB_NAME=practice_app`
 
-# Created the application file server.js with two endpoints.
+### Created the application file server.js with two endpoints.
 
 `http://localhost:3000/health`
 `http://localhost:3000/users`
 
-# Set Up MySQL Database
+### Set Up MySQL Database
 
 Install MySQL
 `
@@ -40,15 +38,15 @@ sudo apt install mysql-server -y
 
 `
 
-# Secure MySQL installation
+### Secure MySQL installation
 
 `sudo mysql_secure_installation`
 
-# Loged into MySQL as root
+### Loged into MySQL as root
 
 `sudo mysql -u root -p`
 
-# Created a new database and user
+### Created a new database and user
 
 `
 CREATE DATABASE practice_app;
@@ -58,7 +56,7 @@ FLUSH PRIVILEGES;
 
 `
 
-# Created a users table and insert sample data
+### Created a users table and insert sample data
 
 `
 USE practice_app;
@@ -76,16 +74,16 @@ INSERT INTO users (name, email) VALUES
 
 `
 
-# Testd the application
+### Testd the application
 
 `node server.js`
 
-# Endpoints
+### Endpoints
 
 `http://localhost:3000/health`
 `http://localhost:3000/users`
 
-# systemd Configuration
+### systemd Configuration
 
 Created a dedicated user
 
@@ -93,14 +91,14 @@ Created a dedicated user
 
 where -m: Creates the user's home directory.
 
-# Placed Node application in /opt/ directory with proper permissions
+### Placed Node application in /opt/ directory with proper permissions
 
 `sudo mkdir -p /opt/nodeapp
 sudo mv /root/code/node-app /opt/nodeapp/`
 
 Here, /opt/nodeapp is the new home for this application.
 
-# Changed ownership of the directory to the newly created nodeapp user:
+### Changed ownership of the directory to the newly created nodeapp user:
 
 `
 sudo chown -R nodeapp:nodeapp /opt/nodeapp/node-app
@@ -108,13 +106,13 @@ sudo chmod -R 755 /opt/nodeapp/node-app
 
 `
 
-# Created a systemd Service File for this Application
+### Created a systemd Service File for this Application
 
 Created a systemd service file for this application in /etc/systemd/system/
 
 `sudo nano /etc/systemd/system/nodeapp.service`
 
-# service file for Node.js app
+### service file for Node.js app
 
 Systemd service files are typically placed in the /etc/systemd/system/ directory.
 
@@ -151,7 +149,7 @@ shows that Node.js is located at
 
 The nodeapp.service file is placed in /etc/systemd/system/.
 
-# Enabled the Service to Start at Boot Time
+### Enabled the Service to Start at Boot Time
 
 Reload systemd to recognize the new service file
 `sudo systemctl daemon-reload`
