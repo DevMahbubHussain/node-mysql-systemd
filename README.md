@@ -19,46 +19,46 @@
 
 ### Created a .env file:
 
-`DB_HOST=localhost
+````DB_HOST=localhost
 DB_USER=appuser
 DB_PASSWORD=password
-DB_NAME=practice_app`
+DB_NAME=practice_app```
 
 ### Created the application file server.js with two endpoints.
 
-`http://localhost:3000/health`
-`http://localhost:3000/users`
+```http://localhost:3000/health```
+```http://localhost:3000/users```
 
 ### Set Up MySQL Database
 
 Install MySQL
-`
-sudo apt update
-sudo apt install mysql-server -y
 
-`
+
+``sudo apt update
+sudo apt install mysql-server -y```
+
 
 ### Secure MySQL installation
 
-`sudo mysql_secure_installation`
+```sudo mysql_secure_installation```
 
 ### Loged into MySQL as root
 
-`sudo mysql -u root -p`
+```sudo mysql -u root -p```
 
 ### Created a new database and user
 
-`
+```
 CREATE DATABASE practice_app;
 CREATE USER 'appuser'@'localhost' IDENTIFIED BY 'password';
 GRANT ALL PRIVILEGES ON practice_app.\* TO 'appuser'@'localhost';
 FLUSH PRIVILEGES;
 
-`
+```
 
 ### Created a users table and insert sample data
 
-`
+```
 USE practice_app;
 
 CREATE TABLE users (
@@ -72,45 +72,45 @@ INSERT INTO users (name, email) VALUES
 ('Bob', 'bob@example.com'),
 ('Charlie', 'charlie@example.com');
 
-`
+```
 
 ### Testd the application
 
-`node server.js`
+```node server.js```
 
 ### Endpoints
 
-`http://localhost:3000/health`
-`http://localhost:3000/users`
+```http://localhost:3000/health```
+```http://localhost:3000/users```
 
 ### systemd Configuration
 
 Created a dedicated user
 
-`sudo useradd -m  nodeapp`
+```sudo useradd -m  nodeapp```
 
 where -m: Creates the user's home directory.
 
 ### Placed Node application in /opt/ directory with proper permissions
 
-`sudo mkdir -p /opt/nodeapp
-sudo mv /root/code/node-app /opt/nodeapp/`
+```sudo mkdir -p /opt/nodeapp
+sudo mv /root/code/node-app /opt/nodeapp/```
 
 Here, /opt/nodeapp is the new home for this application.
 
 ### Changed ownership of the directory to the newly created nodeapp user:
 
-`
+```
 sudo chown -R nodeapp:nodeapp /opt/nodeapp/node-app
 sudo chmod -R 755 /opt/nodeapp/node-app
+```
 
-`
 
 ### Created a systemd Service File for this Application
 
 Created a systemd service file for this application in /etc/systemd/system/
 
-`sudo nano /etc/systemd/system/nodeapp.service`
+```sudo nano /etc/systemd/system/nodeapp.service```
 
 ### service file for Node.js app
 
@@ -118,7 +118,8 @@ Systemd service files are typically placed in the /etc/systemd/system/ directory
 
 The service file for your Node.js application will be called nodeapp.service
 
-`
+````
+
 [Unit]
 Description=Node.js Application
 After=network.target
@@ -141,7 +142,7 @@ StandardError=syslog
 SyslogIdentifier=nodeapp
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-user.target ```
 
 `which node`
 shows that Node.js is located at
@@ -165,7 +166,7 @@ Check the status
 
 output:
 
-`root@bb0003155a9e2ba9:~/code# sudo systemctl status nodeapp.service
+````root@bb0003155a9e2ba9:~/code# sudo systemctl status nodeapp.service
 ● nodeapp.service - Node.js Application
 Loaded: loaded (/etc/systemd/system/nodeapp.service; enabled; vendor preset: enabled)
 Active: active (running) since Wed 2025-03-26 18:34:41 UTC; 38s ago
@@ -177,4 +178,5 @@ CGroup: /system.slice/nodeapp.service
 
 Mar 26 18:34:41 bb0003155a9e2ba9 systemd[1]: Started Node.js Application.
 Mar 26 18:34:42 bb0003155a9e2ba9 nodeapp[29841]: Server running on port 3000
-Mar 26 18:34:42 bb0003155a9e2ba9 nodeapp[29841]: Connected to MySQL database.`
+Mar 26 18:34:42 bb0003155a9e2ba9 nodeapp[29841]: Connected to MySQL database.```
+````
