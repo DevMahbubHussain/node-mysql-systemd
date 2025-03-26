@@ -19,32 +19,41 @@
 
 ### Created a .env file:
 
-````DB_HOST=localhost
+```
+DB_HOST=localhost
 DB_USER=appuser
 DB_PASSWORD=password
-DB_NAME=practice_app```
+DB_NAME=practice_app
+```
 
 ### Created the application file server.js with two endpoints.
 
-```http://localhost:3000/health```
-```http://localhost:3000/users```
+```
+http://localhost:3000/health
+
+```
+
+```
+http://localhost:3000/users
+
+```
 
 ### Set Up MySQL Database
 
 Install MySQL
 
-
-``sudo apt update
-sudo apt install mysql-server -y```
-
+```
+sudo apt update
+sudo apt install mysql-server -y
+```
 
 ### Secure MySQL installation
 
-```sudo mysql_secure_installation```
+`sudo mysql_secure_installation`
 
 ### Loged into MySQL as root
 
-```sudo mysql -u root -p```
+`sudo mysql -u root -p`
 
 ### Created a new database and user
 
@@ -53,7 +62,6 @@ CREATE DATABASE practice_app;
 CREATE USER 'appuser'@'localhost' IDENTIFIED BY 'password';
 GRANT ALL PRIVILEGES ON practice_app.\* TO 'appuser'@'localhost';
 FLUSH PRIVILEGES;
-
 ```
 
 ### Created a users table and insert sample data
@@ -76,25 +84,31 @@ INSERT INTO users (name, email) VALUES
 
 ### Testd the application
 
-```node server.js```
+`node server.js`
 
 ### Endpoints
 
-```http://localhost:3000/health```
-```http://localhost:3000/users```
+`http://localhost:3000/health`
+
+`http://localhost:3000/users`
 
 ### systemd Configuration
 
 Created a dedicated user
 
-```sudo useradd -m  nodeapp```
+```
+sudo useradd -m  nodeapp
+```
 
 where -m: Creates the user's home directory.
 
 ### Placed Node application in /opt/ directory with proper permissions
 
-```sudo mkdir -p /opt/nodeapp
-sudo mv /root/code/node-app /opt/nodeapp/```
+```
+sudo mkdir -p /opt/nodeapp
+sudo mv /root/code/node-app /opt/nodeapp/
+
+```
 
 Here, /opt/nodeapp is the new home for this application.
 
@@ -103,14 +117,17 @@ Here, /opt/nodeapp is the new home for this application.
 ```
 sudo chown -R nodeapp:nodeapp /opt/nodeapp/node-app
 sudo chmod -R 755 /opt/nodeapp/node-app
-```
 
+```
 
 ### Created a systemd Service File for this Application
 
 Created a systemd service file for this application in /etc/systemd/system/
 
-```sudo nano /etc/systemd/system/nodeapp.service```
+```
+sudo nano /etc/systemd/system/nodeapp.service
+
+```
 
 ### service file for Node.js app
 
@@ -118,8 +135,7 @@ Systemd service files are typically placed in the /etc/systemd/system/ directory
 
 The service file for your Node.js application will be called nodeapp.service
 
-````
-
+```
 [Unit]
 Description=Node.js Application
 After=network.target
@@ -142,27 +158,48 @@ StandardError=syslog
 SyslogIdentifier=nodeapp
 
 [Install]
-WantedBy=multi-user.target ```
+WantedBy=multi-user.target
+```
 
-`which node`
+```
+which node
+```
+
 shows that Node.js is located at
-`/usr/local/nvm/versions/node/v18.16.1/bin/node`
+
+```
+/usr/local/nvm/versions/node/v18.16.1/bin/node
+
+```
 
 The nodeapp.service file is placed in /etc/systemd/system/.
 
 ### Enabled the Service to Start at Boot Time
 
 Reload systemd to recognize the new service file
-`sudo systemctl daemon-reload`
+
+```
+sudo systemctl daemon-reload
+```
 
 Enable the service to start at boot time:
-`sudo systemctl enable nodeapp`
+
+```
+sudo systemctl enable nodeapp
+
+```
 
 Start the service
-`sudo systemctl start nodeapp`
+
+```
+sudo systemctl start nodeapp
+```
 
 Check the status
-`sudo systemctl status nodeapp`
+
+```
+sudo systemctl status nodeapp
+```
 
 output:
 
